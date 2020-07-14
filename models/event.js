@@ -14,11 +14,28 @@ const schema = new mongoose.Schema({
     maxLength: 280,
     required: false,
   },
-//   host: {
-//     type: mongoose.Schema.ObjectId,
-//     ref: "User",
-//     required: true,
-//   },
+  startTime: {
+    type: Number,
+  },
+  endTime: {
+    type: Number,
+  },
+  maxGroupSize: {
+    type: Number,
+  },
+  lat: {
+    type: Number,
+    required: true,
+  },
+  lng: {
+    type: Number,
+    required: true,
+  },
+  //   creatorID: {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: "User",
+  //     required: true,
+  //   },
 });
 
 module.exports = mongoose.model("Event", schema);
