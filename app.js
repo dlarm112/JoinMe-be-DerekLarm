@@ -4,11 +4,18 @@ var path = require("path");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const config = require("config");
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const usersRouter = require("./routes/users");
 const eventRouter = require("./routes/events");
+const auth = require("./routes/auth");
 require("dotenv").config();
+
+if (!config.get("jwtPrivateKey")) {
+  console.log("FATAL ERROR: jwtPrivateKey is not defined");
+  process.exit(1);
+}
 
 var app = express();
 
@@ -33,6 +40,7 @@ mongoose
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/event", eventRouter);
+app.use("/auth", auth);
 
 app.use(function (req, res, next) {
   next(createError(404));

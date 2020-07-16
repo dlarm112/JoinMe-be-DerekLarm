@@ -26,11 +26,16 @@ const createEvent = async (req, res) => {
 
 const getEvents = async (req, res) => {
   const events = await Event.find();
-
   res.send(events);
 };
+
+const getEvent = async (req, res) => {
+    const event = await Event.find((c) => c._id === parseInt(req.params.id));
+    res.send(event)
+}
 
 module.exports = {
   createEvent,
   getEvents,
+  getEvent
 };
