@@ -1,3 +1,5 @@
 {
     "jwtPrivateKey": "joinMe_jwtPrivateKey"
 }
+
+mongo "mongodb+srv://joinme.0irbt.mongodb.net/joinme" --username joinmeUser
