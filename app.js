@@ -1,3 +1,4 @@
+require("express-async-errors");
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -5,6 +6,7 @@ var logger = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const config = require("config");
+const error = require("./middleware/error");
 
 var indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -37,10 +39,11 @@ mongoose
   .then(() => console.log("Mongoose connected to database"))
   .catch((err) => console.error("failed to connect to MongoDB...", err));
 
-app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/", indexRouter);
 app.use("/event", eventRouter);
 app.use("/auth", auth);
+app.use(error);
 
 app.use(function (req, res, next) {
   next(createError(404));

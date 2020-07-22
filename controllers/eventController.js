@@ -1,41 +1,20 @@
 const Event = require("../models/event");
 
-const createEvent = async (req, res) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const startTime = req.body.startTime;
-  const endTime = req.body.endTime;
-  const maxGroupSize = req.body.maxGroupSize;
-  const lat = req.body.lat;
-  const lng = req.body.lng;
+const getModalEvents = async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // .page is the param
+  const limit = parseInt(req.query.limit) || 8;
+  const skip = (page - 1) * limit;
+  const PAGE_SIZE = 8;
+  console.log("getting page: ", page);
 
-  console.log(req.body);
-
-  const newEvent = await Event.create({
-    title,
-    description,
-    startTime,
-    endTime,
-    maxGroupSize,
-    lat,
-    lng,
+  const events = await Event.find().sort({rawDate: 1}).limit(PAGE_SIZE).skip(skip);
+  const numDocuments = await Event.find().countDocuments();
+  res.send({
+    data: events,
+    maxPageNum: Math.ceil(numDocuments / PAGE_SIZE),
   });
-  console.log(newEvent);
-  res.send(newEvent);
 };
-
-const getEvents = async (req, res) => {
-  const events = await Event.find();
-  res.send(events);
-};
-
-const getEvent = async (req, res) => {
-    const event = await Event.find((c) => c._id === parseInt(req.params.id));
-    res.send(event)
-}
 
 module.exports = {
-  createEvent,
-  getEvents,
-  getEvent
+  getModalEvents,
 };

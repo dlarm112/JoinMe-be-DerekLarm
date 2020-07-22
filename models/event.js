@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const { number } = require("joi");
 
 const schema = new mongoose.Schema({
+  name:{
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     trim: true,
@@ -20,9 +25,6 @@ const schema = new mongoose.Schema({
   endTime: {
     type: Number,
   },
-  maxGroupSize: {
-    type: Number,
-  },
   lat: {
     type: Number,
     required: true,
@@ -31,11 +33,25 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  //   creatorID: {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: "User",
-  //     required: true,
-  //   },
+  date: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  rawDate:{
+    type: Number,
+  },
+  apiDate:{
+    type: String,
+  },
+  creatorID: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Event", schema);
