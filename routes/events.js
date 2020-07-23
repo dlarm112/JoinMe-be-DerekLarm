@@ -42,13 +42,11 @@ router.post("/", async (req, res) => {
 router.route("/modal").get(getModalEvents);
 
 router.get("/:apiDate", async (req, res) => {
-  console.log(req);
   const events = await Event.find({ apiDate: req.params.apiDate });
   res.send(events);
 });
 
 router.get("/", async (req, res) => {
-  console.log(req);
   const events = await Event.find();
   res.send(events);
 });
