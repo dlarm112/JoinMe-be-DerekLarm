@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const error = require("./middleware/error");
 
-var indexRouter = require("./routes/index");
+const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const eventRouter = require("./routes/events");
 const auth = require("./routes/auth");
@@ -36,9 +36,9 @@ mongoose
   .catch((err) => console.error("failed to connect to MongoDB...", err));
 
 app.use("/users", usersRouter);
-app.use("/", indexRouter);
 app.use("/event", eventRouter);
 app.use("/auth", auth);
+app.use("/", indexRouter);
 app.use(error);
 
 app.use(function (req, res, next) {

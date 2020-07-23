@@ -46,9 +46,14 @@ router.get("/:apiDate", async (req, res) => {
   res.send(events);
 });
 
-router.get("/", async (req, res) => {
-  const events = await Event.find();
-  res.send(events);
+router.get("/", async (req, res, next) => {
+  try {
+    console.log("KOHKAOAOAHKHAKHOAOAHOA");
+    const events = await Event.find();
+    res.send(events);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.delete("/:id", async (req, res) => {
