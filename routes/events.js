@@ -2,7 +2,10 @@ const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 var express = require("express");
 var router = express.Router();
-const { getModalEvents } = require("../controllers/eventController");
+const {
+  getModalEvents,
+  getUserModalEvents,
+} = require("../controllers/eventController");
 const Event = require("../models/event");
 
 /* /EVENT */
@@ -39,7 +42,18 @@ router.post("/", async (req, res) => {
   res.send(newEvent);
 });
 
+router.route("/modal/:user").get(getUserModalEvents);
+
 router.route("/modal").get(getModalEvents);
+
+router.get("/user/:user", async (req, res, next) => {
+  try {
+    const events = await Event.find({ name: req.params.user });
+    res.send(events);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/:apiDate", async (req, res) => {
   const events = await Event.find({ apiDate: req.params.apiDate });
@@ -48,7 +62,6 @@ router.get("/:apiDate", async (req, res) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    console.log("KOHKAOAOAHKHAKHOAOAHOA");
     const events = await Event.find();
     res.send(events);
   } catch (err) {
