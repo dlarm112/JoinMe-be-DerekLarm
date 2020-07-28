@@ -61,7 +61,7 @@ router.get("/:apiDate", async (req, res) => {
 });
 
 // DELETE PAST EVENTS
-router.delete("/:apiDate", async (req, res) => {
+router.delete("/past/:apiDate", async (req, res) => {
   const result = await Event.deleteMany({
     apiDate: { "$lt" : req.params.apiDate },
   });
