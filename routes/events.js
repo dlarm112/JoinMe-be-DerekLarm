@@ -60,6 +60,14 @@ router.get("/:apiDate", async (req, res) => {
   res.send(events);
 });
 
+// DELETE PAST EVENTS
+router.delete("/:apiDate", async (req, res) => {
+  const result = await Event.deleteMany({
+    apiDate: { "$lt" : req.params.apiDate },
+  });
+  res.send(result);
+});
+
 router.get("/", async (req, res, next) => {
   try {
     const events = await Event.find();
